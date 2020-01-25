@@ -1,0 +1,77 @@
+﻿@page "/RegistroClientes"
+
+@using ProyectoFinalWeb.Entidades;
+
+
+
+    
+        <h3 class="text-center">RegistroClientes</h3>
+        <!-- <div >
+
+         
+
+     </div>
+        -->
+
+        <EditForm Model="@Cliente">
+
+            <div class="form-group">
+                <label for="NombreTextBoxt">Nombre</label>
+                <InputText Id="NombreTextBoxt" @bind-Value="@Cliente.Nombres" class="form-control"></InputText>
+            </div>
+            <div class="form-group">
+                <label for="TelefonoTextBoxt">Telefono</label>
+                <InputText Id="TelefonoTextBoxt" @bind-Value="@Cliente.Telefono" class="form-control"></InputText>
+            </div>
+            <div class="form-group">
+                <label for="FechaNacimientoTextBoxt">Fecha de nacimiento</label>
+                <InputDate Id="FechaNacimientoTextBoxt" @bind-Value="@Cliente.FechaNacimiento" class="form-control"></InputDate>
+            </div>
+            <div class="form-group">
+                <label for="CedulaTextBoxt">Cedula</label>
+                <InputText Id="CedulaTextBoxt" @bind-Value="@Cliente.Cedula" class="form-control"></InputText>
+            </div>
+            <div class="form-group">
+                <label for="TelefonoTextBoxt">Telefono</label>
+                <InputText Id="TelefonoTextBoxt" @bind-Value="@Cliente.Telefono" class="form-control"></InputText>
+            </div>
+            <div class="form-group">
+                <label for="CelularTextBoxt">Celular</label>
+                <InputText Id="CelularTextBoxt" @bind-Value="@Cliente.Cedula" class="form-control"></InputText>
+            </div>
+            <div class="form-group">
+                <label for="DireccionTextBoxt">Direccion</label>
+                <InputTextArea Id="DireccionTextBoxt" @bind-Value="Cliente.Direccion" class="form-control"></InputTextArea>
+            </div>
+            <div class="form-group">
+                <label for="LimiteCreditoTextBoxt">Limite de Credito</label>
+                <InputNumber Id="LimiteCreditoTextBoxt" @bind-Value="Cliente.LimiteCredito" class="form-control"></InputNumber>
+            </div>
+            <div class="form-group">
+                <label for="LimiteVentaTextBoxt">Limite de Venta</label>
+                <InputNumber Id="LimiteVentaTextBoxt" @bind-Value="Cliente.LimiteVenta" class="form-control"></InputNumber>
+            </div>
+            <div class="form-group">
+                <label for="BalanceTextBoxt">Balance</label>
+                <InputNumber Id="BalanceTextBoxt" @bind-Value="Cliente.Balance" ReadOnly="true" class="form-control"></InputNumber>
+            </div>
+
+        </EditForm>
+
+
+
+
+
+@code {
+    
+
+    public Clientes Cliente { get; set; }
+
+
+    public void Guardar()
+    {
+
+    }
+
+
+}
