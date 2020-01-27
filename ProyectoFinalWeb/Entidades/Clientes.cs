@@ -10,8 +10,11 @@ namespace ProyectoFinalWeb.Entidades
     {
         [Key]
         public int ClienteId { get; set; }
+        [Required(ErrorMessage = "Debe establecer un limite de compras a credito")]
         public decimal LimiteCredito { get; set; }
+        [Required(ErrorMessage = "Debe establecer un limite de venta")]
         public decimal LimiteVenta { get; set; }
+        [Required (ErrorMessage ="Ingrese un valance")]
         public decimal Balance { get; set; }
 
 

@@ -1,0 +1,214 @@
+﻿@page "/ListaClientes"
+
+@using ProyectoFinalWeb.Entidades;
+@using ProyectoFinalWeb.BLL;
+@using System.Linq.Expressions;
+@using System.Collections.Generic;
+
+
+<div class="container">
+
+    <h3 class="display-4 text-center">ListaClientes</h3>
+
+    <!--Inicio del panel de criterios de busqueda-->
+    <div class="">
+
+        <div class=" row justify-content-md-center align-content-center">
+
+            <div class=" form-group col-md-2">
+
+                <label for="TipoFiltradoSelect">Tipo de Filtrado:</label>
+
+                <select class="form-control" Id="TipoFiltradoSelect" @bind="SelectInput">
+                    <option value="Todo" selected>Todo</option>
+                    <option value="Nombre">Nombre</option>
+                    <option value="Id">Id</option>
+                    <option value="BalanceMayor">Balance mayor</option>
+                    <option value="BalanceMenor">Balance menor</option>
+                    <option value="LimiteVentaMayor">Limite de venta mayor</option>
+                    <option value="LimiteVentaMenor">Limite de venta menor</option>
+                    <option value="LimiteCreditoMayor">Limite de credito mayor</option>
+                    <option value="LimiteCreditoMenor">Limite de Credito Menor</option>
+                    <option value="FechaNacimiento">Fecha de Nacimiento</option>
+                    
+                </select>
+
+
+            </div>
+
+            <div class="form-group col-md-2">
+                <div class="form-inline">
+                    <div class="form-group mb-2">
+
+                        <label for="DesdeFechaInput">Fecha </label>
+                        <input class="ml-1" type="checkbox" @bind-value="BuscarFecha" id="defaultCheck1"> Filtrar por Fecha
+
+                    </div>
+
+                </div>
+                @*<label for="DesdeFechaInput">Fecha </label>*@
+                <input id="DesdeFechaInput" type="date" @bind-value="DesdeFecha" class="form-control " input />
+            </div>
+
+            <div class="form-group col-2">
+                <label for="HastaFechaInput">Hasta</label>
+                <input type="date" Id="HastaFechaInput" @bind-value="HastaFecha" class="form-control" />
+            </div>
+
+            <div class="form-group col-md-5">
+                <label>Criterio</label>
+                <div class="row">
+                    <input type="search" name="CriterioInput" @bind-value="Criterio" class="form-control col-md-9 " />
+                    <button class="btn btn-outline-success col-md-2 ml-md-2 " @onclick="Buscar">Buscar</button>
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+    <!--Final del panle de criterios de busqueda-->
+    <!--Inicio de la tabla-->
+    <div>
+
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Nombres</th>
+                    <th scope="col">Cedula</th>
+                    <th scope="col">Telefono</th>
+                    <th scope="col">Fecha de Nacimiento</th>
+                    <th scope="col">Limite de Credito</th>
+                    <th scope="col">Limite de Ventas</th>
+                    <th scope="col">Balance</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var obj in Lista)
+                {
+                    <tr>
+                        <th scope="row">@obj.ClienteId</th>
+                        <td>@obj.Nombres</td>
+                        <td>@obj.Cedula</td>
+                        <td>@obj.Telefono</td>
+                        <td>@obj.FechaNacimiento</td>
+                        <td>@obj.LimiteCredito</td>
+                        <td>@obj.LimiteVenta</td>
+                        <td>@obj.Balance</td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+
+    </div>
+    <!--fin de la tabla-->
+
+</div>
+
+
+
+@code {
+
+
+    public List<Clientes> Lista { get; set; }
+    public List<Clientes> ListaCargador { get; set; }
+
+    public bool BuscarFecha { get; set; }
+    public DateTime DesdeFecha { get; set; }
+    public DateTime HastaFecha { get; set; }
+    public string SelectInput { get; set; }
+    public string Criterio { get; set; }
+
+
+    protected override void OnInitialized()
+    {
+        Lista = new List<Clientes>();
+        ListaCargador = new List<Clientes>();
+        DesdeFecha = DateTime.Now;
+        HastaFecha = DateTime.Now;
+        SelectInput = "Todo";
+        CargarLista();
+        Lista = ListaCargador;
+    }
+
+
+    private void CargarLista()
+    {
+        RepositorioBase<Clientes> db = new RepositorioBase<Clientes>();
+
+        try
+        {
+            ListaCargador = db.GetList(C => true);
+
+
+        }
+        catch (Exception) { throw; }
+    }
+
+    private void Buscar()
+    {
+        RepositorioBase<Clientes> db = new RepositorioBase<Clientes>();
+        try
+        {
+            switch (SelectInput)
+            {
+                case "Todo":
+                    Lista = ListaCargador;
+                    break;
+
+                case "Nombre":
+                    Lista = ListaCargador.Where(S=> S.Nombres.Contains(Criterio)).ToList();
+                    break;
+
+                case "BalanceMayor":
+                    Lista = ListaCargador.Where(S=> S.Balance >= decimal.Parse(Criterio)).ToList();
+                    break;
+
+                case "BalanceMenor":
+                    Lista = ListaCargador.Where(S=> S.Balance <= decimal.Parse(Criterio)).ToList();
+                    break;
+
+                case "Id":
+                    Lista = ListaCargador.Where(S=> S.ClienteId == int.Parse(Criterio)).ToList();
+                    break;
+
+                case "LimiteVentaMayor":
+                    Lista = ListaCargador.Where(S=> S.LimiteVenta >= decimal.Parse(Criterio)).ToList();
+                    break;
+
+                case "LimiteVentaMenor":
+                    Lista = ListaCargador.Where(S=> S.LimiteVenta <= decimal.Parse(Criterio)).ToList();
+                    break;
+
+                case "LimiteCreditoMayor":
+                    Lista = ListaCargador.Where(S=> S.LimiteCredito >= decimal.Parse(Criterio)).ToList();
+                    break;
+
+                case "LimiteCreditoMenor":
+                    Lista = ListaCargador.Where(S=> S.LimiteVenta <= decimal.Parse(Criterio)).ToList();
+                    break;
+
+                case "FechaNacimiento":
+                    Lista = ListaCargador.Where(S=> S.FechaNacimiento >= DesdeFecha.Date && S.FechaNacimiento <= HastaFecha.Date).ToList();
+                    break;
+
+                default:
+                    Lista = ListaCargador;
+                    break;
+
+            }
+
+            if(BuscarFecha && SelectInput != "FechaNacimiento")
+            {
+                Lista = Lista.Where(S => S.FechaCreacion >= DesdeFecha.Date && S.FechaCreacion <= HastaFecha.Date).ToList();
+            }
+        }
+        catch (Exception) { throw; }
+
+
+    }
+
+}
