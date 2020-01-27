@@ -9,7 +9,7 @@ namespace ProyectoFinalWeb.Entidades
     public class Clientes : Personas
     {
         [Key]
-        public int IdCliente { get; set; }
+        public int ClienteId { get; set; }
         public decimal LimiteCredito { get; set; }
         public decimal LimiteVenta { get; set; }
         public decimal Balance { get; set; }
@@ -17,7 +17,7 @@ namespace ProyectoFinalWeb.Entidades
 
         public Clientes()
         {
-            IdCliente = 0;
+            ClienteId = 0;
             LimiteCredito = 0;
             LimiteVenta = 0;
             Balance = 0;

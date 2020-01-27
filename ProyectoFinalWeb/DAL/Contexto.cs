@@ -14,7 +14,7 @@ namespace ProyectoFinalWeb.DAL
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server = ./SqlExpress; Database= ProyectoFinalWebDb; Trusted_Connection = True; ");
+            optionsBuilder.UseSqlServer(@"Server = .\SqlExpress; Database=ProyectoFinalDb; Trusted_Connection = True; ");
         }
     }
 }

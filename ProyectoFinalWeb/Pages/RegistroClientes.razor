@@ -1,76 +1,150 @@
-﻿@page "/RegistroClientes"
+﻿@page "/RegistroClientes/{ClienteId:int}"
 
 @using ProyectoFinalWeb.Entidades;
+@using ProyectoFinalWeb.BLL;
+
+<style>
+    .box {
+        box-sizing: border-box;
+        padding: 0;
+        width: auto;
+        margin: 1.75rem auto;
+        position: relative;
+        max-width: 600px;
+        background-image: linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 70%);
+        border-radius: 4px;
+        box-shadow: 7px 13px 37px #000;
+    }
+</style>
 
 
 
-    
-        <h3 class="text-center">RegistroClientes</h3>
-        <!-- <div >
+<div class="box text-white pt-3">
 
-         
+    <h3 class="text-center display-4 mb-3">Registro de Clientes</h3>
 
-     </div>
-        -->
+    <EditForm Model="@Cliente" OnValidSubmit="Guardar">
+        <DataAnnotationsValidator />
+        <div class="form-group ml-4 mr-4">
+            <label for="NombreTextBoxt">Nombre</label>
+            <InputText Id="NombreTextBoxt" @bind-Value="@Cliente.Nombres" class="form-control"></InputText>
+        </div>
+        <div class="form-group ml-4 mr-4">
+            <label for="CedulaTextBoxt">Cedula</label>
+            <InputText Id="CedulaTextBoxt" @bind-Value="@Cliente.Cedula" class="form-control"></InputText>
+        </div>
+        <div class="form-group ml-4 mr-4">
+            <label for="TelefonoTextBoxt">Telefono</label>
+            <InputText Id="TelefonoTextBoxt" @bind-Value="@Cliente.Telefono" class="form-control"></InputText>
+        </div>
+        <div class="form-group ml-4 mr-4">
+            <label for="CelularTextBoxt">Celular</label>
+            <InputText Id="CelularTextBoxt" @bind-Value="@Cliente.Celular" class="form-control"></InputText>
+        </div>
+        <div class="form-group ml-4 mr-4">
+            <label for="FechaNacimientoTextBoxt">Fecha de nacimiento</label>
+            <InputDate Id="FechaNacimientoTextBoxt" @bind-Value="@Cliente.FechaNacimiento" class="form-control"></InputDate>
+        </div>
+        <div class="form-group ml-4 mr-4">
+            <label for="DireccionTextBoxt">Direccion</label>
+            <InputTextArea Id="DireccionTextBoxt" @bind-Value="Cliente.Direccion" class="form-control"></InputTextArea>
+        </div>
+        <div class="form-group ml-4 mr-4">
+            <label for="LimiteCreditoTextBoxt">Limite de Credito</label>
+            <InputNumber Id="LimiteCreditoTextBoxt" @bind-Value="Cliente.LimiteCredito" class="form-control"></InputNumber>
+        </div>
+        <div class="form-group ml-4 mr-4">
+            <label for="LimiteVentaTextBoxt">Limite de Venta</label>
+            <InputNumber Id="LimiteVentaTextBoxt" @bind-Value="Cliente.LimiteVenta" class="form-control"></InputNumber>
+        </div>
+        <div class="form-group ml-4 mr-4">
+            <label for="BalanceTextBoxt">Balance</label>
+            <InputNumber Id="BalanceTextBoxt" @bind-Value="Cliente.Balance" ReadOnly="true" class="form-control"></InputNumber>
+        </div>
+        <ValidationSummary />
+        <small class="text-muted  ml-4 mr-4">@Mensaje</small>
+        <div class="form-group ml-4 mr-4">
+            <button type="submit" class="btn btn-success btn-lg mb-4 mr-md-3 ">Guardar</button>
+            <button type="button" class="btn btn-primary btn-lg  mb-4 " @onclick="Limpiar" >Limpiar formulario </button>
+        </div>
 
-        <EditForm Model="@Cliente">
 
-            <div class="form-group">
-                <label for="NombreTextBoxt">Nombre</label>
-                <InputText Id="NombreTextBoxt" @bind-Value="@Cliente.Nombres" class="form-control"></InputText>
-            </div>
-            <div class="form-group">
-                <label for="TelefonoTextBoxt">Telefono</label>
-                <InputText Id="TelefonoTextBoxt" @bind-Value="@Cliente.Telefono" class="form-control"></InputText>
-            </div>
-            <div class="form-group">
-                <label for="FechaNacimientoTextBoxt">Fecha de nacimiento</label>
-                <InputDate Id="FechaNacimientoTextBoxt" @bind-Value="@Cliente.FechaNacimiento" class="form-control"></InputDate>
-            </div>
-            <div class="form-group">
-                <label for="CedulaTextBoxt">Cedula</label>
-                <InputText Id="CedulaTextBoxt" @bind-Value="@Cliente.Cedula" class="form-control"></InputText>
-            </div>
-            <div class="form-group">
-                <label for="TelefonoTextBoxt">Telefono</label>
-                <InputText Id="TelefonoTextBoxt" @bind-Value="@Cliente.Telefono" class="form-control"></InputText>
-            </div>
-            <div class="form-group">
-                <label for="CelularTextBoxt">Celular</label>
-                <InputText Id="CelularTextBoxt" @bind-Value="@Cliente.Cedula" class="form-control"></InputText>
-            </div>
-            <div class="form-group">
-                <label for="DireccionTextBoxt">Direccion</label>
-                <InputTextArea Id="DireccionTextBoxt" @bind-Value="Cliente.Direccion" class="form-control"></InputTextArea>
-            </div>
-            <div class="form-group">
-                <label for="LimiteCreditoTextBoxt">Limite de Credito</label>
-                <InputNumber Id="LimiteCreditoTextBoxt" @bind-Value="Cliente.LimiteCredito" class="form-control"></InputNumber>
-            </div>
-            <div class="form-group">
-                <label for="LimiteVentaTextBoxt">Limite de Venta</label>
-                <InputNumber Id="LimiteVentaTextBoxt" @bind-Value="Cliente.LimiteVenta" class="form-control"></InputNumber>
-            </div>
-            <div class="form-group">
-                <label for="BalanceTextBoxt">Balance</label>
-                <InputNumber Id="BalanceTextBoxt" @bind-Value="Cliente.Balance" ReadOnly="true" class="form-control"></InputNumber>
-            </div>
 
-        </EditForm>
+
+
+    </EditForm>
+
+
+</div>
+
+
+
 
 
 
 
 
 @code {
-    
+
 
     public Clientes Cliente { get; set; }
+
+    [Parameter]
+    public int ClienteId { get; set; }
+
+    public string Mensaje { get; set; }
+
+    protected override void OnInitialized()
+    {
+
+        Cliente = new Clientes();
+
+    }
 
 
     public void Guardar()
     {
+        RepositorioBase<Clientes> db = new RepositorioBase<Clientes>();
+        Mensaje = string.Empty;
 
+        try
+        {
+            if (ClienteId == 0)
+            {
+
+                if(db.Guardar(Cliente))
+                {
+                    Mensaje = "Guardado Exitosamente";
+                    Cliente = new Clientes();
+                }
+                else
+                {
+                    Mensaje = "No se pudo guardar";
+                }
+            }
+            else
+            {
+                Cliente.ClienteId = ClienteId;
+                if(db.Modificar(Cliente))
+                {
+                    Mensaje = "Modificado Exitosamente";
+                    Cliente = new Clientes();
+                }
+                else
+                {
+                    Mensaje = "No se pudo Modificar";
+                }
+            }
+        }
+        catch (Exception) { throw; }
+
+
+    }
+
+    private void Limpiar()
+    {
+        Cliente = new Clientes();
+        Mensaje = string.Empty;
     }
 
 
