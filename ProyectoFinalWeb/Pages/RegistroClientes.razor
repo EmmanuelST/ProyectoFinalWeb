@@ -99,6 +99,24 @@
 
         Cliente = new Clientes();
 
+        if(ClienteId > 0)
+        {
+            Buscar();
+        }
+
+    }
+
+    private void Buscar()
+    {
+        try
+        {
+            RepositorioBase<Clientes> db = new RepositorioBase<Clientes>();
+
+            Cliente = db.Buscar(ClienteId);
+
+
+        }
+        catch (Exception) { throw; }
     }
 
 
@@ -129,6 +147,7 @@
                 {
                     Mensaje = "Modificado Exitosamente";
                     Cliente = new Clientes();
+                    ClienteId = 0;
                 }
                 else
                 {
@@ -145,6 +164,7 @@
     {
         Cliente = new Clientes();
         Mensaje = string.Empty;
+        ClienteId = 0;
     }
 
 

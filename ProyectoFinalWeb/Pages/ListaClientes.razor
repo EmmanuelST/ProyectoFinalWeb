@@ -6,88 +6,89 @@
 @using System.Collections.Generic;
 
 
-<div class="container">
+    <div class="container">
 
-    <h3 class="display-4 text-center">ListaClientes</h3>
+        <h3 class="display-4 text-center">ListaClientes</h3>
 
-    <!--Inicio del panel de criterios de busqueda-->
-    <div class="">
+        <!--Inicio del panel de criterios de busqueda-->
+        <div class="">
 
-        <div class=" row justify-content-md-center align-content-center">
+            <div class=" row justify-content-md-center align-content-center">
 
-            <div class=" form-group col-md-2">
+                <div class=" form-group col-md-2">
 
-                <label for="TipoFiltradoSelect">Tipo de Filtrado:</label>
+                    <label for="TipoFiltradoSelect">Tipo de Filtrado:</label>
 
-                <select class="form-control" Id="TipoFiltradoSelect" @bind="SelectInput">
-                    <option value="Todo" selected>Todo</option>
-                    <option value="Nombre">Nombre</option>
-                    <option value="Id">Id</option>
-                    <option value="BalanceMayor">Balance mayor</option>
-                    <option value="BalanceMenor">Balance menor</option>
-                    <option value="LimiteVentaMayor">Limite de venta mayor</option>
-                    <option value="LimiteVentaMenor">Limite de venta menor</option>
-                    <option value="LimiteCreditoMayor">Limite de credito mayor</option>
-                    <option value="LimiteCreditoMenor">Limite de Credito Menor</option>
-                    <option value="FechaNacimiento">Fecha de Nacimiento</option>
-                    
-                </select>
+                    <select class="form-control" Id="TipoFiltradoSelect" @bind="SelectInput">
+                        <option value="Todo" selected>Todo</option>
+                        <option value="Nombre">Nombre</option>
+                        <option value="Id">Id</option>
+                        <option value="BalanceMayor">Balance mayor</option>
+                        <option value="BalanceMenor">Balance menor</option>
+                        <option value="LimiteVentaMayor">Limite de venta mayor</option>
+                        <option value="LimiteVentaMenor">Limite de venta menor</option>
+                        <option value="LimiteCreditoMayor">Limite de credito mayor</option>
+                        <option value="LimiteCreditoMenor">Limite de Credito Menor</option>
+                        <option value="FechaNacimiento">Fecha de Nacimiento</option>
+
+                    </select>
 
 
-            </div>
+                </div>
 
-            <div class="form-group col-md-2">
-                <div class="form-inline">
-                    <div class="form-group mb-2">
+                <div class="form-group col-md-2">
+                    <div class="form-inline">
+                        <div class="form-group mb-2">
 
-                        <label for="DesdeFechaInput">Fecha </label>
-                        <input class="ml-1" type="checkbox" @bind-value="BuscarFecha" id="defaultCheck1"> Filtrar por Fecha
+                            <label for="DesdeFechaInput">Fecha </label>
+                            <input class="ml-1" type="checkbox" @bind-value="BuscarFecha" id="defaultCheck1"> Filtrar por Fecha
 
+                        </div>
+
+                    </div>
+                    @*<label for="DesdeFechaInput">Fecha </label>*@
+                    <input id="DesdeFechaInput" type="date" @bind-value="DesdeFecha" class="form-control " input />
+                </div>
+
+                <div class="form-group col-2">
+                    <label for="HastaFechaInput">Hasta</label>
+                    <input type="date" Id="HastaFechaInput" @bind-value="HastaFecha" class="form-control" />
+                </div>
+
+                <div class="form-group col-md-5">
+                    <label>Criterio</label>
+                    <div class="row">
+                        <input type="search" name="CriterioInput" @bind-value="Criterio" class="form-control col-md-9 " />
+                        <button class="btn btn-outline-success col-md-2 ml-md-2 " @onclick="Buscar">Buscar</button>
                     </div>
 
                 </div>
-                @*<label for="DesdeFechaInput">Fecha </label>*@
-                <input id="DesdeFechaInput" type="date" @bind-value="DesdeFecha" class="form-control " input />
-            </div>
-
-            <div class="form-group col-2">
-                <label for="HastaFechaInput">Hasta</label>
-                <input type="date" Id="HastaFechaInput" @bind-value="HastaFecha" class="form-control" />
-            </div>
-
-            <div class="form-group col-md-5">
-                <label>Criterio</label>
-                <div class="row">
-                    <input type="search" name="CriterioInput" @bind-value="Criterio" class="form-control col-md-9 " />
-                    <button class="btn btn-outline-success col-md-2 ml-md-2 " @onclick="Buscar">Buscar</button>
-                </div>
 
             </div>
+
 
         </div>
+        <!--Final del panle de criterios de busqueda-->
+        <!--Inicio de la tabla-->
+        <div>
 
-
-    </div>
-    <!--Final del panle de criterios de busqueda-->
-    <!--Inicio de la tabla-->
-    <div>
-
-        <table class="table">
-            <thead class="thead-dark">
-                <tr>
-                    <th scope="col">Id</th>
-                    <th scope="col">Nombres</th>
-                    <th scope="col">Cedula</th>
-                    <th scope="col">Telefono</th>
-                    <th scope="col">Fecha de Nacimiento</th>
-                    <th scope="col">Limite de Credito</th>
-                    <th scope="col">Limite de Ventas</th>
-                    <th scope="col">Balance</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var obj in Lista)
-                {
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Nombres</th>
+                        <th scope="col">Cedula</th>
+                        <th scope="col">Telefono</th>
+                        <th scope="col">Fecha de Nacimiento</th>
+                        <th scope="col">Limite de Credito</th>
+                        <th scope="col">Limite de Ventas</th>
+                        <th scope="col">Balance</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var obj in Lista)
+                    {
                     <tr>
                         <th scope="row">@obj.ClienteId</th>
                         <td>@obj.Nombres</td>
@@ -96,17 +97,44 @@
                         <td>@obj.FechaNacimiento</td>
                         <td>@obj.LimiteCredito</td>
                         <td>@obj.LimiteVenta</td>
-                        <td>@obj.Balance</td>
-                    </tr>
-                }
+                        <td>@obj.Balance    <a href="RegistroClientes/@obj.ClienteId">Editar</a> | <a href="#">Eliminar</a></td>
 
-            </tbody>
-        </table>
+                    </tr>
+                    }
+
+                </tbody>
+            </table>
+
+        </div>
+        <!--fin de la tabla-->
+
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+            Launch demo modal
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        ...
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </div>
-    <!--fin de la tabla-->
-
-</div>
 
 
 
@@ -122,6 +150,8 @@
     public string SelectInput { get; set; }
     public string Criterio { get; set; }
 
+    public int ClienteAEliminar { get; set; }
+
 
     protected override void OnInitialized()
     {
@@ -132,6 +162,24 @@
         SelectInput = "Todo";
         CargarLista();
         Lista = ListaCargador;
+    }
+
+    private void setClienteAEliminar(int Id)
+    {
+        ClienteAEliminar = Id;
+    }
+
+    private void Eliminar()
+    {
+        try
+        {
+            RepositorioBase<Clientes> db = new RepositorioBase<Clientes>();
+
+            db.Eliminar(ClienteAEliminar);
+            ClienteAEliminar = 0;
+
+        }
+        catch (Exception) { throw; }
     }
 
 
