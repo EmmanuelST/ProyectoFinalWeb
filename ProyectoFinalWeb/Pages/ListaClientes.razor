@@ -84,7 +84,8 @@
                     <th scope="col">Limite de Credito</th>
                     <th scope="col">Limite de Ventas</th>
                     <th scope="col">Balance</th>
-
+                    <th scope="col"></th>
+                    <th scope="col"></th>
                 </tr>
             </thead>
             <tbody>
@@ -98,8 +99,9 @@
                         <td>@obj.FechaNacimiento</td>
                         <td>@obj.LimiteCredito</td>
                         <td>@obj.LimiteVenta</td>
-                        <td>@obj.Balance    <a class="btn btn-outline-danger btn-sm" href="RegistroClientes/@obj.ClienteId">Editar</a> | <a class="btn btn-outline-danger btn-sm" @onclick="(() => setClienteAEliminar(obj.ClienteId))" data-toggle="modal" data-target="#exampleModal">Eliminar</a></td>
-
+                        <td>@obj.Balance</td>
+                        <td><a class="btn btn-outline-primary btn-sm" @onclick="(() => setClienteAEditar(obj.ClienteId))" data-toggle="modal" data-target="#exampleModalEditar">Editar</a></td>
+                        <td><a class="btn btn-outline-danger btn-sm" @onclick="(() => setClienteAEliminar(obj.ClienteId))" data-toggle="modal" data-target="#exampleModal">Eliminar</a></td>
                     </tr>
                 }
 
@@ -107,9 +109,9 @@
         </table>
 
     </div>
+    @*href="RegistroClientes/@obj.ClienteId"*@
     <!--fin de la tabla-->
-    
-    <!-- Modal -->
+    <!-- Modal de Eliminacion -->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -123,13 +125,34 @@
                     Desea eliminar el cliente?
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                     <button type="button" @onclick="Eliminar" data-dismiss="modal" class="btn btn-primary">Si, Estoy seguro</button>
                 </div>
             </div>
         </div>
     </div>
 
+</div>
+
+<!-- Modal de Modificacion -->
+<div class="modal fade" id="exampleModalEditar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelEditar" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabelEditar">Atencion!!</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Seguro de que desea editar el cliente?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="button" @onclick="Editar" data-dismiss="modal" class="btn btn-primary">Si, Estoy seguro</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 
@@ -147,6 +170,7 @@
     public string Criterio { get; set; }
 
     public int ClienteAEliminar { get; set; }
+    public int CLienteAEditar { get; set; }
 
 
     protected override void OnInitialized()
@@ -157,12 +181,19 @@
         HastaFecha = DateTime.Now;
         SelectInput = "Todo";
         CargarLista();
-        
+
     }
 
     private void setClienteAEliminar(int Id)
     {
         ClienteAEliminar = Id;
+    }
+
+    private void setClienteAEditar(int Id)
+    {
+
+        CLienteAEditar = Id;
+
     }
 
     private void Eliminar()
@@ -175,8 +206,14 @@
             ClienteAEliminar = 0;
             CargarLista();
 
+        }
+        catch (Exception) {  }
     }
-        catch (Exception) { throw; }
+
+    private void Editar()
+    {
+        NavigationManager.NavigateTo($"/RegistroCLientes/{CLienteAEditar}");
+
     }
 
 
@@ -190,7 +227,7 @@
             Lista = ListaCargador;
 
         }
-        catch (Exception) { throw; }
+        catch (Exception) {  }
     }
 
     private void Buscar()
@@ -251,7 +288,7 @@
                 Lista = Lista.Where(S => S.FechaCreacion >= DesdeFecha.Date && S.FechaCreacion <= HastaFecha.Date).ToList();
             }
         }
-        catch (Exception) { throw; }
+        catch (Exception) {  }
 
 
     }
